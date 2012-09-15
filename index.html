@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your here</title>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="paging.js"></script>
+    <style type="text/css">
+        #outermost {
+            width: 60%;
+            padding: 20px;
+            margin: auto;
+            border: 1px solid #CCC;
+            text-align: center;
+        }
+
+        #master_list li {
+            font-size: 18px;
+        }
+
+        .disabled {
+            color: #6E6E6E !important;
+        }
+    </style>
+</head>
+<body>
+<div id="outermost">
+    <div id="container">
+        <div id="pages">
+            <div id="content">
+                <ul id="master_list">
+                    <li>Item One</li>
+                    <li>Item Two</li>
+                    <li>Item Three</li>
+                    <li>Item Four</li>
+                    <li>Item Five</li>
+                    <li>Item Six</li>
+                    <li>Item Seven</li>
+                    <li>Item Eight</li>
+                    <li>Item Nine</li>
+                    <li>Item Ten</li>
+                </ul>
+            </div>
+            <div id="page_footer">
+                <a href='javascript:;' id="load_previous_batch"></a>
+                <span> | </span>
+                <a href='javascript:;' id="load_next_batch"></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    (function () {
+        var master = $('#master_list'), items = [];
+
+        $.each((new Array(20)), function (index, item) {
+            items.push($('<div id="item_' + index + '" />').html('Monkey see ' + index));
+        });
+
+        $('#master_list').paging({
+            items:items,
+            limit:5
+        });
+
+        // No items option and paging will look for and use <li> or <div> tags
+        // $('#master_list').paging({
+        //    limit:5
+        // });
+
+
+    })()
+</script>
+</body>
+</html>
