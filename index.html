@@ -1,72 +1,248 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="utf-8">
     <title>Your here</title>
-    <script type="text/javascript" src="jquery.js"></script>
-    <script type="text/javascript" src="paging.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
     <style type="text/css">
-        #outermost {
-            width: 60%;
-            padding: 20px;
-            margin: auto;
-            border: 1px solid #CCC;
-            text-align: center;
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
         }
 
-        #master_list li {
-            font-size: 18px;
+        .sidebar-nav {
+            padding: 9px 0;
         }
 
         .disabled {
             color: #6E6E6E !important;
         }
+
+        .inner-shadow {
+            -webkit-box-shadow: inset 2px 1px 3px rgba(0, 0, 0, 0.5);
+            -moz-box-shadow: inset 2px 1px 3px rgba(0, 0, 0, 0.5);
+            box-shadow: inset 2px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        .well {
+            border: 1px solid #380B61;
+        }
+        .hero-unit {
+            background: #380B61;
+            color: #f5f5f5;
+        }
     </style>
+    <style type="text/css">
+            /*#outermost {*/
+            /*width: 60%;*/
+            /*padding: 20px;*/
+            /*margin: auto;*/
+            /*border: 1px solid #CCC;*/
+            /*text-align: center;*/
+            /*}*/
+
+            /*#master_list li {*/
+            /*font-size: 18px;*/
+            /*}*/
+
+            /*.disabled {*/
+            /*color: #6E6E6E !important;*/
+            /*}*/
+            /*li {*/
+            /*list-style-type: none;*/
+            /*}*/
+    </style>
+    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="assets/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
 </head>
+
 <body>
-<div id="outermost">
-    <div id="container">
-        <div id="pages">
-            <div id="content">
-                <ul id="master_list">
-                    <li>Item One</li>
-                    <li>Item Two</li>
-                    <li>Item Three</li>
-                    <li>Item Four</li>
-                    <li>Item Five</li>
-                    <li>Item Six</li>
-                    <li>Item Seven</li>
-                    <li>Item Eight</li>
-                    <li>Item Nine</li>
-                    <li>Item Ten</li>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="#">JavaScript Paging ala jQuery</a>
+
+            <div class="nav-collapse collapse">
+                <!--<p class="navbar-text pull-right">-->
+                <!--Logged in as <a href="#" class="navbar-link">Username</a>-->
+                <!--</p>-->
+                <ul class="nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <!--<li><a href="#about">About</a></li>-->
+                    <!--<li><a href="#contact">Contact</a></li>-->
                 </ul>
             </div>
-            <div id="page_footer">
-                <a href='javascript:;' id="load_previous_batch"></a>
-                <span> | </span>
-                <a href='javascript:;' id="load_next_batch"></a>
-            </div>
+            <!--/.nav-collapse -->
         </div>
     </div>
 </div>
 
+<div class="container-fluid">
+    <div class="row-fluid" style="text-align: center;">
+        <div class="span11" style="margin:auto;float:none;text-align: left;">
+            <div class="hero-unit inner-shadow" style="padding:30px;">
+                <h1>Simple JavaScript Pagination</h1>
+
+                <p>Served up as a jQuery plugin</p>
+                <!--<p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>-->
+            </div>
+            <div class="row-fluid">
+                <div class="span4">
+                    <h2>Dynamic</h2>
+
+                    <div id="custom_list" class="well inner-shadow"></div>
+                </div>
+                <!--/span-->
+                <div class="span4">
+                    <h2>Fixed List</h2>
+
+                    <div id="master_list" class="well inner-shadow">
+                        <ul>
+                            <li>Item One</li>
+                            <li>Item Two</li>
+                            <li>Item Three</li>
+                            <li>Item Four</li>
+                            <li>Item Five</li>
+                            <li>Item Six</li>
+                            <li>Item Seven</li>
+                            <li>Item Eight</li>
+                            <li>Awesome Item Nine</li>
+                            <li>Awesome Item Ten</li>
+                            <li>Awesome Item One</li>
+                            <li>Awesome Item Two</li>
+                            <li>Awesome Item Three</li>
+                            <li>Awesome Item Four</li>
+                            <li>Awesome Item Five</li>
+                            <li>Awesome Item Six</li>
+                            <li>Awesome Item Seven</li>
+                            <li>Awesome Item Eight</li>
+                            <li>Awesome Item Nine</li>
+                            <li>Awesome Item Ten</li>
+                        </ul>
+                    </div>
+                </div>
+                <!--/span-->
+                <div class="span4">
+                    <h2>Fixed Table</h2>
+
+                    <div id="master_table_list" class="well inner-shadow">
+                        <table>
+                            <tr>
+                                <td>Table Item One</td>
+                            </tr>
+                            <tr>
+                                <td>Table Item Two</td>
+                            </tr>
+                            <tr>
+                                <td>Table Item Three</td>
+                            </tr>
+                            <tr>
+                                <td>Table Item Four</td>
+                            </tr>
+                            <tr>
+                                <td>Table Item Five</td>
+                            </tr>
+                            <tr>
+                                <td>Table Item Six</td>
+                            </tr>
+                            <tr>
+                                <td>Table Item Seven</td>
+                            </tr>
+                            <tr>
+                                <td>Table Item Eight</td>
+                            </tr>
+                            <tr>
+                                <td>Table Item Nine</td>
+                            </tr>
+                            <tr>
+                                <td>Table Item Ten</td>
+                            </tr>
+                            <tr>
+                                <td>Table Item Eleven</td>
+                            </tr>
+                            <tr>
+                                <td>Table Item Twelve</td>
+                            </tr>
+                            <tr>
+                                <td>Table Item Thirteen</td>
+                            </tr>
+                            <tr>
+                                <td>Table Item Fourteen</td>
+                            </tr>
+                            <tr>
+                                <td>Table Item Fifteen</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <!--/span-->
+            </div>
+            <!--/row-->
+        </div>
+        <!--/span-->
+    </div>
+    <!--/row-->
+
+    <hr>
+
+    <footer>
+        <p>&copy; Company 2012</p>
+    </footer>
+
+</div>
+<!--/.fluid-container-->
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="jquery.js"></script>
+<script type="text/javascript" src="paging.js"></script>
+<script src="assets/js/bootstrap-transition.js"></script>
+<script src="assets/js/bootstrap-alert.js"></script>
+<script src="assets/js/bootstrap-modal.js"></script>
+<script src="assets/js/bootstrap-dropdown.js"></script>
+<script src="assets/js/bootstrap-scrollspy.js"></script>
+<script src="assets/js/bootstrap-tab.js"></script>
+<script src="assets/js/bootstrap-tooltip.js"></script>
+<script src="assets/js/bootstrap-popover.js"></script>
+<script src="assets/js/bootstrap-button.js"></script>
+<script src="assets/js/bootstrap-collapse.js"></script>
+<script src="assets/js/bootstrap-carousel.js"></script>
+<script src="assets/js/bootstrap-typeahead.js"></script>
 <script type="text/javascript">
     (function () {
-        var master = $('#master_list'), items = [];
+        var master = $('#master_list'), my_items = [];
 
-        $.each((new Array(20)), function (index, item) {
-            items.push($('<div id="item_' + index + '" />').html('Monkey see ' + index));
+        $.each((new Array(56)), function (index, item) {
+            my_items.push($('<div id="item_' + index + '" />').html('Dynamically Created Item ' + index));
         });
 
-        $('#master_list').paging({
-            items:items,
-            limit:5
-        });
+        $('#master_list').paging({ limit:5 });
+        $('#custom_list').paging({ items:my_items, limit:11 });
 
         // No items option and paging will look for and use <li> or <div> tags
-        // $('#master_list').paging({
-        //    limit:5
-        // });
-
+        $('#master_table_list').paging({ limit:10 })
 
     })()
 </script>

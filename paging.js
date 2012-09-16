@@ -8,16 +8,17 @@
 
             this.settings = $.extend({
                 limit:50,
-                items:[]
+                items:[],
+                tags:['li', 'tr', 'div']
             }, options);
 
             // setup
             this.current_item = null;
-            this.$next_page = $('#load_next_batch');
-            this.$previous_page = $('#load_previous_batch');
+            this.$next_page = $(this).find('.next_page');
+            this.$previous_page = $(this).find('.prev_page');
+            this.$master = [];
             this.page_number = 0;
             this.pages = [];
-
 
             // methods and attributes specific to the current page
             this.Page = function (collection) {
@@ -41,10 +42,13 @@
 
             // Split the collection into sets, create a new Page() for each set and save it to this.pages (array).
             this.buildPages = function () {
+                var limit = this.settings.limit;
+
                 this.pages = [];
-                this.page_sets = Math.ceil(this.getItems().length / this.settings.limit);
+                this.page_sets = Math.ceil(this.getItems().length / limit);
+
                 for (var index = 0; index < this.page_sets; index++) {
-                    this.pages.push(new this.Page(this.getItems().slice(index * this.settings.limit, (index * this.settings.limit) + this.settings.limit)));
+                    this.pages.push(new this.Page(this.getItems().slice(index * limit, (index * limit) + limit)));
                 }
                 return this;
             };
@@ -62,11 +66,11 @@
             this.ready = function (callback) {
                 paging.$next_page
                     [!paging.nextPageCount() > 0 ? 'addClass' : 'removeClass']('disabled')
-                    .html('Next ' + (paging.nextPageCount() || '') + ' items')
+                    .html('Next ' + (paging.nextPageCount() || '') + ' items &raquo;')
                     .show();
                 paging.$previous_page
                     [!paging.previousPageCount() > 0 ? 'addClass' : 'removeClass']('disabled')
-                    .html('Previous ' + (paging.previousPageCount() || '') + ' items')
+                    .html('&laquo; Previous ' + (paging.previousPageCount() || '') + ' items')
                     .show();
                 if (callback) callback.call(paging);
             };
@@ -77,19 +81,14 @@
 
             this.bindItem = function () {
                 if (!$(this.getItem()).hasClass('loaded')) {
-                    $(this.getItem()).addClass('loaded');
                     // bind some events maybe
+                    $(this.getItem()).addClass('loaded');
                 }
                 return this;
             };
 
             this.insertItem = function () {
-                $(this).append(this.getItemElement());
-                return this;
-            };
-
-            this.doSomeBindings = function () {
-                // bind some stuff with this.getItem()
+                this.$master.append(this.getItemElement());
                 return this;
             };
 
@@ -129,15 +128,26 @@
 
             // Bindings
 
-            this.$next_page
-                .bind('click', function () {
-                    paging.loadNextPage.call(this);
-                });
+            this.bindNavigation = function (callback) {
+                if (!this.$next_page.length && !this.$previous_page.length) {
+                    this.$nav = $('<div />').addClass('page_navigation');
+                    this.$nav
+                        .html('<a href="javascript:;" class="prev_page btn"  style="float: left;"></a> <a href="javascript:;" class="next_page btn"  style="float: right;"></a>')
+                        .insertAfter(this);
+                    this.$next_page = this.$nav.find('.next_page');
+                    this.$previous_page = this.$nav.find('.prev_page');
+                }
+                this.$next_page
+                    .bind('click', function () {
+                        paging.loadNextPage.call(this);
+                    });
 
-            this.$previous_page
-                .bind('click', function () {
-                    paging.loadPreviousPage.call(this);
-                });
+                this.$previous_page
+                    .bind('click', function () {
+                        paging.loadPreviousPage.call(this);
+                    });
+                if (callback) callback.call(this);
+            };
 
 
             //
@@ -214,18 +224,38 @@
                 return !this.current_item[0] ? this.getItem() : this.current_item[0];
             };
 
-            if ($(this).find('li').length)
-                this._unloaded = $(this).find('li').detach();
+            this.setMaster = function () {
+                this.$master = $(this);
 
-            if ($(this).find('div').length)
-                this._unloaded = $(this).find('div');
+                if ($(this.getItems()).first().prop('tagName') == 'TR') {
+                    if ($(this).prop('tagName') != 'TABLE') this.$master = $(this).find('table');
+                }
+                if ($(this.getItems()).first().prop('tagName') == 'LI') {
+                    if ($(this).prop('tagName') != 'UL') this.$master = $(this).find('ul');
+                }
+                if(!this.$previous_page.length) this.$previous_page = $(this).siblings().filter('.page_navigation').find('.prev_page');
+                if(!this.$next_page.length) this.$next_page = $(this).siblings().filter('.page_navigation').find('.next_page');
+                return this;
+            };
 
-            this._unloaded = this.settings.items.length ? this.settings.items : this._unloaded;
+            // init
+            this._unloaded = this.settings.items;
 
-            if (!this.settings.items) return;
+            $.each(this.settings.tags, function () {
+                var $item = $(paging).find(this.toString());
+                if (!paging._unloaded.length && $item.length) paging._unloaded = $item.detach();
+            });
+
+            if (!this._unloaded.length) return;
 
             // kick off
-            this.buildPages().loadItems();
+            try {
+                this.setMaster().buildPages().bindNavigation(function () {
+                    this.loadItems();
+                });
+            } catch (e) {
+                if (console) console.log('Oops, error in paging.js. ' + e);
+            }
         });
 
     }; // end of Paging
