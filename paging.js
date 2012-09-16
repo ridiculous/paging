@@ -75,7 +75,7 @@
 
             this.bindItem = function () {
                 if (!$(this.getItem()).hasClass('loaded')) {
-                    // bind some events maybe
+                    // bind some events maybe?
                     $(this.getItem()).addClass('loaded');
                 }
                 return this;
@@ -126,15 +126,14 @@
                     this.$next_page = this.$nav.find('.next_page');
                     this.$previous_page = this.$nav.find('.prev_page');
                 }
-                this.$next_page
-                    .bind('click', function () {
-                        paging.loadNextPage.call(this);
-                    });
-
-                this.$previous_page
-                    .bind('click', function () {
-                        paging.loadPreviousPage.call(this);
-                    });
+                this.$next_page.bind('click', function () {
+                    paging.loadNextPage.call(this);
+                    return false;
+                });
+                this.$previous_page.bind('click', function () {
+                    paging.loadPreviousPage.call(this);
+                    return false;
+                });
                 if (callback) callback.call(this);
             };
 
