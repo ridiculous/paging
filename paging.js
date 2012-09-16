@@ -22,12 +22,6 @@
 
             // methods and attributes specific to the current page
             this.Page = function (collection) {
-                this.firstItem = function () {
-                    return this.getItems() ? this.getItems().first() : undefined;
-                };
-                this.lastItem = function () {
-                    return this.getItems() ? this.getItems().last() : undefined;
-                };
                 this.getItems = function () {
                     return this._items;
                 };
@@ -92,11 +86,6 @@
                 return this;
             };
 
-            this.hideButtons = function () {
-                this.$next_page.hide();
-                this.$previous_page.hide();
-            };
-
             this.loadPreviousPage = function () {
                 paging.pageChange(function () {
                     paging.page_number--;
@@ -149,34 +138,8 @@
                 if (callback) callback.call(this);
             };
 
-
-            //
-            // Methods for Re-ordering
-            //
-
-            this.firstItem = function () {
-                return this.getItems().first();
-            };
-
-            this.lastItem = function () {
-                return this.getItems().last();
-            };
-
             this.deleteItem = function (index) {
                 this.setItem(this._unloaded.splice(index, 1));
-            };
-
-            this.removeItem = function (item, callback) {
-                var changed_id = item.getId();
-
-                $.each(this.getItems(), function (index, item) {
-                    if (item.getId() == changed_id) {
-                        paging.deleteItem(index);
-                        return false;
-                    }
-                });
-                this.buildPages();
-                if (callback) callback.call(this);
             };
 
             //
