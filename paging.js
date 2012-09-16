@@ -191,20 +191,20 @@
                 return !this.nextPage() ? 0 : this.nextPage().getItemCount();
             };
 
-            this.getPage = function () {
-                return this.pages[this.page_number];
+            this.getPage = function (page_number) {
+                return this.pages[page_number || this.page_number];
             };
 
             this.getPageItems = function () {
                 return this.getPage().getItems();
             };
 
-            this.previousPage = function (inc) {
-                return this.pages[this.page_number - (inc || 1)];
+            this.previousPage = function () {
+                return this.pages[this.page_number - 1];
             };
 
-            this.nextPage = function (inc) {
-                return this.pages[this.page_number + (inc || 1)];
+            this.nextPage = function () {
+                return this.pages[this.page_number + 1];
             };
 
             this.getItems = function () {
@@ -224,6 +224,7 @@
                 return !this.current_item[0] ? this.getItem() : this.current_item[0];
             };
 
+            // search for elements to use as $master and $prev/$next_page
             this.setMaster = function () {
                 this.$master = $(this);
 
@@ -233,14 +234,17 @@
                 if ($(this.getItems()).first().prop('tagName') == 'LI') {
                     if ($(this).prop('tagName') != 'UL') this.$master = $(this).find('ul');
                 }
-                if(!this.$previous_page.length) this.$previous_page = $(this).siblings().filter('.page_navigation').find('.prev_page');
-                if(!this.$next_page.length) this.$next_page = $(this).siblings().filter('.page_navigation').find('.next_page');
+
+                // search siblings for navigation elements
+                if (!this.$previous_page.length) this.$previous_page = $(this).siblings().filter('.page_navigation').find('.prev_page');
+                if (!this.$next_page.length) this.$next_page = $(this).siblings().filter('.page_navigation').find('.next_page');
                 return this;
             };
 
             // init
             this._unloaded = this.settings.items;
 
+            // search this element for li, tr, div elements and store them
             $.each(this.settings.tags, function () {
                 var $item = $(paging).find(this.toString());
                 if (!paging._unloaded.length && $item.length) paging._unloaded = $item.detach();
