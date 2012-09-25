@@ -3212,7 +3212,7 @@ input[type="button"].btn-block {
 
 .btn-primary:active,
 .btn-primary.active {
-  background-color: #003399 \9;
+  background-color: #003399;
 }
 
 .btn-warning {

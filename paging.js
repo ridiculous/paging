@@ -87,6 +87,7 @@
             };
 
             this.loadPreviousPage = function () {
+                if (!paging.previousPage()) return;
                 paging.pageChange(function () {
                     paging.page_number--;
                     paging.loadItems();
@@ -94,6 +95,7 @@
             };
 
             this.loadNextPage = function () {
+                if (!paging.nextPage()) return;
                 paging.pageChange(function () {
                     paging.page_number++;
                     paging.loadItems();
@@ -105,8 +107,6 @@
             };
 
             this.pageCleanUp = function (callback) {
-                if (/\+\+/.test(callback) && !this.nextPage()) return false;
-                if (/\-\-/.test(callback) && !this.previousPage()) return false;
                 $(this)
                     .find('.loaded')
                     .each(function () {
@@ -135,10 +135,6 @@
                     return false;
                 });
                 if (callback) callback.call(this);
-            };
-
-            this.deleteItem = function (index) {
-                this.setItem(this._unloaded.splice(index, 1));
             };
 
             //
@@ -217,7 +213,7 @@
             // kick off
             try {
                 this.setMaster().buildPages().bindNavigation(function () {
-                    this.loadItems();
+                    paging.loadItems();
                 });
             } catch (e) {
                 if (console) console.log('Oops, error in paging.js. ' + e);
