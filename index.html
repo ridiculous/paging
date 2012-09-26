@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Your here</title>
+    <title>Your here at the paging demo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Magic in the making">
+    <meta name="author" content="Ryan Buckley">
 
     <!-- Le styles -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
@@ -60,7 +60,7 @@
     <![endif]-->
 
     <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="assets/ico/favicon.ico">
+    <link rel="shortcut icon" href="/webimages/dsfav.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
@@ -236,7 +236,7 @@
 <script type="text/javascript">
     (function () {
         var master = $('#master_list'), $amt = $('#item_amount'), $per = $('#per_page'), $custom = $('#custom_list'),
-                classes = ['primary', '', 'danger', 'info', 'warning', 'success', 'mini', 'small', 'inverse', 'large'];
+                classes = ['primary', 'block', 'danger', 'info', 'warning', 'success', 'mini', 'small', 'inverse', 'large'];
 
         $('#master_list').paging({ limit:5 });
 
@@ -249,7 +249,7 @@
             $.each((new Array(amt)), function (index, item) {
                 var $i = $('<div />'),
                         rand = parseInt(Math.random(5) * 10);
-                $i.append($('<a href="#" class="btn-' + classes[rand] + '" />').text('Dynamically Created Item ' + index));
+                $i.append($('<a href="javascript:;" class="btn btn-' + classes[rand] + '" />').text('Dynamically Created Item ' + index));
                 if (index % 5 == 0) $i.append($('<input value="' + index / 5 + '" />'));
                 my_items.push($i);
             });
