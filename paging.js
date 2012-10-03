@@ -29,7 +29,8 @@
                     this._items = items;
                 };
                 this.getItemCount = function () {
-                    return this.getItems() ? this.getItems().length : 0;
+                    if (this.getItems()) return this.getItems().length;
+                    else return 0;
                 };
                 this.setItems(collection);
             };
@@ -142,11 +143,13 @@
             //
 
             this.previousPageCount = function () {
-                return !this.previousPage() ? 0 : this.previousPage().getItemCount();
+                if (this.previousPage()) return this.previousPage().getItemCount();
+                else return 0;
             };
 
             this.nextPageCount = function () {
-                return !this.nextPage() ? 0 : this.nextPage().getItemCount();
+                if (this.nextPage()) return this.nextPage().getItemCount();
+                else return 0;
             };
 
             this.getPage = function (page_number) {
@@ -179,7 +182,8 @@
             };
 
             this.getItemElement = function () {
-                return !this.current_item[0] ? this.getItem() : this.current_item[0];
+                if (this.current_item[0]) return this.current_item[0];
+                else return this.getItem();
             };
 
             // search for elements to use as $master and $prev/$next_page
