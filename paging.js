@@ -10,7 +10,7 @@
                 limit:50,
                 items:[],
                 tags:['li', 'tr', 'div'],
-                container:[]
+                container:$(this)
             }, options);
 
             // setup
@@ -19,13 +19,15 @@
 
             // search for elements to use as container and $prev/$next_page
             this.setContainer = function () {
-                this.container = $(this);
 
-                if ($(this.getItems()).first().prop('tagName') == 'TR') {
-                    if ($(this).prop('tagName') != 'TABLE') this.container = $(this).find('table');
-                }
-                if ($(this.getItems()).first().prop('tagName') == 'LI') {
-                    if ($(this).prop('tagName') != 'UL') this.container = $(this).find('ul');
+                if (!this.prefs.container.length) {
+
+                    if ($(this.getItems()).first().prop('tagName') == 'TR') {
+                        if ($(this).prop('tagName') != 'TABLE') this.prefs.container = $(this).find('table');
+                    }
+                    if ($(this.getItems()).first().prop('tagName') == 'LI') {
+                        if ($(this).prop('tagName') != 'UL') this.prefs.container = $(this).find('ul');
+                    }
                 }
 
                 // search siblings for navigation elements

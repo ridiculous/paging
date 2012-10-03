@@ -1,5 +1,8 @@
 /**
  * PageNavigator
+ * - Dependencies
+ *      - PageHelper
+ *      - PageBuilder
  *
  * @param {object} paging
  * @constructor
